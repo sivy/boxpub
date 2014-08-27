@@ -3,14 +3,14 @@
 from distutils.core import setup
 
 with open('README.md') as f:
-	README = f.read()
+    README = f.read()
 
 with open('requirements.txt') as f:
-	REQUIREMENTS = f.read()
-	REQUIREMENTS = REQUIREMENTS.split('\n')
+    REQUIREMENTS = f.read()
+    REQUIREMENTS = REQUIREMENTS.split('\n')
 
 setup(
-	name='boxpub',
+    name='boxpub',
     version='0.1',
     description='basic dropbox web publisher',
     long_description=README,
@@ -20,4 +20,4 @@ setup(
     packages=['boxpub'],
     include_package_data=True,
     install_requires=REQUIREMENTS
-	)
+    )
