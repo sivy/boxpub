@@ -10,6 +10,16 @@ Sadly, because the boy was a programmer, and both lazy and full of hubris, he wa
 
 The boy, dejected, tried to image blogging another way, and failed.
 
-Then, he thought... I don't need a **magic castle**, *I just need the magic*.
+Then, he thought... "I don't need a **magic castle**, *I just need the magic*."
 
 This is what he did next.
+
+### Installation
+
+	% got clone https://github.com/sivy/boxpub.git
+	% cd boxpub
+	% pip install .
+
+### Configuration
+
+### Using Boxpub
