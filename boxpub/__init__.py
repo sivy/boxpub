@@ -12,7 +12,11 @@ from flask import Flask, request
 
 from postutils import split_markdown, process_markdown
 
-logging.basicConfig(level=logging.DEBUG)
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s %(module)s.%(funcName)s (%(lineno)d) %(levelname)s: %(message)s'
+    )
 log = logging.getLogger('boxpub')
 
 
