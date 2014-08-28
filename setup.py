@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 
 from distutils.core import setup
 
@@ -9,7 +10,7 @@ with open('requirements.txt') as f:
     REQUIREMENTS = f.read()
     REQUIREMENTS = REQUIREMENTS.split('\n')
 
-setup(
+setup (
     name='boxpub',
     version='0.1',
     description='basic dropbox web publisher',
@@ -19,5 +20,8 @@ setup(
     url='http://monkinetic.com',
     packages=['boxpub'],
     include_package_data=True,
-    install_requires=REQUIREMENTS
+    install_requires=REQUIREMENTS,
+    data_files=[
+        ('/opt/boxpub/config.py', ['files/config.py']),
+        ],
     )
