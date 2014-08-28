@@ -11,7 +11,7 @@ def split_markdown(md):
     File content could have 0 or more yaml lines at the start
     """
     log.debug('split_markdown()')
-    log.debug(md)
+    # log.debug(md)
 
     md = md.strip()
 
@@ -25,12 +25,12 @@ def split_markdown(md):
         '\n\n|\r\n\r\n|\r\r',
         md+'\n\n')  # whee, lots of linefeeds!
 
-    log.debug('paras:')
-    log.debug(paras)
+    # log.debug('paras:')
+    # log.debug(paras)
 
     meta_string = paras[0]  # pretty sure it's going to have this either way
-    log.debug('meta_string:')
-    log.debug(meta_string)
+    # log.debug('meta_string:')
+    # log.debug(meta_string)
 
     if meta_string:
         try:
@@ -47,27 +47,15 @@ def split_markdown(md):
 
     content = content.strip()
 
-    log.debug("split_markdown() returning: " + repr((meta, content)))
+    # log.debug("split_markdown() returning: " + repr((meta, content)))
     return (meta, content)
 
 
 def process_markdown(path, md):
     log.debug("process_markdown()")
     meta, content = split_markdown(md)
-    log.warning('meta, content')
-    log.debug(meta)
-    #
-    # this can explode if yaml.Scanner cannot parse the meta
-    # -- we let it blow up and catch the error one level up
-    #
-    # if meta:
-    #     try:
-    #         meta = yaml.load(meta)
-    #     except ScannerError, se:
-    #         log.error(se.message)
-    #         log.exception(se)
-    #         meta = {}
-    #     log.debug("POST META YAML: " + repr(meta))
+    # log.warning('meta, content')
+    # log.debug(meta)
 
     html = markdown.markdown(content, ['extra', 'headerid', 'codehilite'])
 
@@ -78,5 +66,5 @@ def process_markdown(path, md):
         'html': html
     }
 
-    log.info(data)
+    # log.info(data)
     return data
