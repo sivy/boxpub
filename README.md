@@ -16,10 +16,28 @@ This is what he did next.
 
 ### Installation
 
-	% got clone https://github.com/sivy/boxpub.git
+	% git clone https://github.com/sivy/boxpub.git
 	% cd boxpub
 	% pip install .
 
+### Pre-requisites
+
+1. A Dropbox Account
+2. A Dropbox developer account
+3. A Dropbox app - it can be in "develop" mode
+4. A web host that can run python apps
+5. Knowledge of the Linux Arcanacus
+
 ### Configuration
 
+
+
 ### Using Boxpub
+
+Important locations and things:
+
+* `Dropbox/apps/boxpub/posts`: Your blog posts go here, in `YYYY-MM-DD-post-title.md` format.
+* `Dropbox/apps/boxpub/templates`:
+	- `index.html`
+	- `post.html`
+	- `archive.html`
