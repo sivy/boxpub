@@ -8,6 +8,8 @@ import dropbox
 from dropbox import client, session
 # from dropbox.rest import ErrorResponse
 
+from werkzeug.routing import BaseConverter
+
 from flask import Flask, request
 
 from postutils import split_markdown, process_markdown
@@ -92,6 +94,13 @@ def render_file_with_template(target_file, target_template):
 
     return page_content
 
+class RegexConverter(BaseConverter):
+    def __init__(self, url_map, *items):
+        super(RegexConverter, self).__init__(url_map)
+        self.regex = items[0]
+
+
+boxpub.url_map.converters['regex'] = RegexConverter
 ############################################################
 # web handlers
 #
@@ -118,7 +127,7 @@ def blog_page_handle(page, template='post.html'):
     return page_content
 
 
-@boxpub.route('/posts/<year>/<month>/<day>/<filename>')
+@boxpub.route('/<regex("[\d]{4}"):year>/<regex("[\d]{2}"):month>/<regex("[\d]{2}"):day>/<filename>')
 def blog_post_handle(year, month, day, filename, template='post.html'):
     log.debug('blog_post_handle()')
     log.info('Dropbox post request')
