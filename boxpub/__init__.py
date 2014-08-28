@@ -30,7 +30,7 @@ def render_template(template_string, context):
         'settings': config,
         'config': config,
         'site': {
-            'title': 'mpnkinetic',
+            'title': 'monkinetic',
             'subhead': '',
             'description': '',
             'url': '',
