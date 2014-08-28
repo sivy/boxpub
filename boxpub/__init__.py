@@ -116,6 +116,63 @@ def dropbox_webhook_handle():
     return ""
 
 
+@boxpub.route('/')
+def blog_index_handle(template='index.html'):
+    log.debug('blog_index_handle()')
+
+    target_file = "posts"
+
+    client = dropbox.client.DropboxClient(config.DROPBOX_PRIVATE_TOKEN)
+
+    dropbox_meta = client.metadata(
+        target_file, list=True)
+
+    log.info('files: %s' % len(dropbox_meta['contents']))
+
+    files = dropbox_meta['contents']
+
+    files = sorted(
+        files,
+        key=lambda f: f['path'],
+        reverse=True)
+    files = files[:10]
+
+    log.debug(files)
+
+    for f in files:
+        log.debug(f['path'])
+
+        file_response, dropbox_meta = client.get_file_and_metadata(
+        f['path'])
+
+        f.update(dropbox_meta)
+
+        file_content = file_response.read()
+
+        fdata = process_markdown(
+            target_file, file_content)
+
+        log.debug(fdata)
+
+        f.update(fdata)
+
+        f.update(f['meta'])
+        if 'Title' in f:
+            f['title'] = f['Title']
+        log.debug(f)
+
+    # log.debug(files)
+
+    template_response, meta = client.get_file_and_metadata(
+        'templates/%s' % template)
+    template_content = template_response.read()
+
+    page_content = render_template(template_content, {
+            'posts': files,
+        })
+
+    return page_content
+
 @boxpub.route('/page/<page>')
 def blog_page_handle(page, template='post.html'):
     log.debug('blog_page_handle()')
