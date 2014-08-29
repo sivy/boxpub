@@ -4,3 +4,4 @@ Flask==0.9
 Jinja2==2.6
 dropbox
 gunicorn
+yaml
