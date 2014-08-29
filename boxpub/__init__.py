@@ -3,6 +3,7 @@ import config
 from datetime import datetime
 import jinja2
 import markdown
+import re
 
 import dropbox
 from dropbox import client, session
@@ -66,30 +67,38 @@ def render_file_with_template(target_file, target_template):
 
     file_content = file_response.read()
 
-    fdata = process_markdown(
+    f = process_markdown(
         target_file, file_content)
 
-    log.debug(fdata)
+    log.debug(f)
 
-    if 'meta' in fdata:
-        fmeta = fdata['meta']
+    if 'meta' in f:
+        fmeta = f['meta']
         fmeta.update(dropbox_meta)
         if 'Title' in fmeta:
             fmeta['title'] = fmeta['Title']
-        fdata['meta'] = fmeta
+        f['meta'] = fmeta
     else:
-        fdata['meta'] = dropbox_meta
+        f['meta'] = dropbox_meta
 
     # data['published'] = data['modified']
     # data['created'] = data['modified']
+
+    # fix title
+    f.update(f['meta'])
+    if 'Title' in f:
+        f['title'] = f['Title']
+
+    # permalink
+    f['permalink'] = url_for_path(f['path'])
 
     template_response, meta = client.get_file_and_metadata(
         'templates/%s' % target_template)
     template_content = template_response.read()
 
     page_content = render_template(template_content, {
-            'page': fdata,
-            'post': fdata,
+            'page': f,
+            'post': f,
         })
 
     return page_content
@@ -114,6 +123,8 @@ class RegexConverter(BaseConverter):
 
 
 boxpub.url_map.converters['regex'] = RegexConverter
+
+
 ############################################################
 # web handlers
 #
@@ -137,12 +148,10 @@ def blog_index_handle(template='index.html'):
 
     client = dropbox.client.DropboxClient(config.DROPBOX_PRIVATE_TOKEN)
 
-    dropbox_meta = client.metadata(
+    dropbox_response = client.metadata(
         target_file, list=True)
 
-    log.info('files: %s' % len(dropbox_meta['contents']))
-
-    files = dropbox_meta['contents']
+    files = dropbox_response['contents']
 
     files = sorted(
         files,
@@ -156,9 +165,10 @@ def blog_index_handle(template='index.html'):
         log.debug(f['path'])
 
         file_response, dropbox_meta = client.get_file_and_metadata(
-        f['path'])
+            f['path'])
 
         f.update(dropbox_meta)
+        log.debug(f['path'])
 
         file_content = file_response.read()
 
@@ -168,10 +178,16 @@ def blog_index_handle(template='index.html'):
         log.debug(fdata)
 
         f.update(fdata)
+        log.debug(f['path'])
 
+        # fix title
         f.update(f['meta'])
         if 'Title' in f:
             f['title'] = f['Title']
+
+        # permalink
+        f['permalink'] = url_for_path(f['path'])
+
         log.debug(f)
 
     # log.debug(files)
