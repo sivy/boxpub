@@ -22,6 +22,6 @@ setup (
     include_package_data=True,
     install_requires=REQUIREMENTS,
     data_files=[
-        ('/opt/boxpub/config.py', ['files/config.py']),
+        ('/etc/boxpub/config.py', ['files/config.py']),
         ],
     )
