@@ -6,4 +6,4 @@ sys.path.append('./boxpub')
 sys.path.append('/etc/boxpub')
 
 from boxpub import boxpub
-boxpub.run(debug=True)
+boxpub.run(debug=True, host='0.0.0.0')
