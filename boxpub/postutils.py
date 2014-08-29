@@ -60,7 +60,6 @@ def process_markdown(path, md):
     html = markdown.markdown(content, ['extra', 'headerid', 'codehilite'])
 
     data = {
-        'path': path,
         'meta': meta,
         'markdown': content,
         'html': html
