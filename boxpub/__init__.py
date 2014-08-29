@@ -94,6 +94,19 @@ def render_file_with_template(target_file, target_template):
 
     return page_content
 
+
+def url_for_path(path):
+    if 'posts' in path:
+        year, month, day, filename = re.match(
+            '/posts/([\d]{4})-([\d]{2})-([\d]{2})-([\w-]+)\.md',
+            path).groups()
+        return "/%s/%s/%s/%s" % (year, month, day, filename)
+    elif 'page' in path:
+        filename = re.match(
+            '/pages/([\w-]+)\.md',
+            path).group(1)
+        return "/pages/%s" % filename
+
 class RegexConverter(BaseConverter):
     def __init__(self, url_map, *items):
         super(RegexConverter, self).__init__(url_map)
