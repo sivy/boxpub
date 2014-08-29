@@ -38,9 +38,9 @@ def render_template(template_string, context):
         'config': config,
         'site': {
             'title': 'monkinetic',
-            'subhead': '',
+            'subhead': 'Steve Ivy\'s weblog, XI Ed.',
             'description': '',
-            'url': '',
+            'url': 'http://monkinetic.com',
             'time': datetime.now(),
         },
     }
