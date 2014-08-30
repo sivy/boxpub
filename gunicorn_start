@@ -1,0 +1,31 @@
+#!/bin/bash
+
+NAME="boxpub"
+FLASKDIR=/opt/boxpub
+VENVDIR=/opt/boxpub/env
+SOCKFILE=/opt/boxpub/sock
+USER=deploy
+GROUP=deploy
+NUM_WORKERS=8
+HOST=0.0.0.0
+PORT=5000
+
+echo "Starting $NAME"
+
+# activate the virtualenv
+cd $VENVDIR
+source bin/activate
+
+export PYTHONPATH=$FLASKDIR:$PYTHONPATH
+
+# Create the run directory if it doesn't exist
+RUNDIR=$(dirname $SOCKFILE)
+test -d $RUNDIR || mkdir -p $RUNDIR
+
+# Start gunicorn
+exec gunicorn boxpub:boxpub -b $HOST:$PORT \
+  --name $NAME \
+  --workers $NUM_WORKERS \
+  --user=$USER --group=$GROUP \
+  --log-level=debug \
+  --bind=unix:$SOCKFILE
