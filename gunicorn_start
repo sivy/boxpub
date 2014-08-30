@@ -14,7 +14,7 @@
 NAME="boxpub"
 FLASKDIR=/opt/boxpub
 VENVDIR=/opt/boxpub/env
-SOCKFILE=/opt/boxpub/sock
+SOCKFILE=/tmp/boxpub.sock
 USER=deploy
 GROUP=deploy
 NUM_WORKERS=8
