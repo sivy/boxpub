@@ -8,17 +8,11 @@ One day, a boy came along and said "these are well and nice but the experience c
 
 Sadly, because the boy was a programmer, and both lazy and full of hubris, he was actually shite at marketing and maintenance. His magic Dropbox-blogging castle fell into disrepair until one day, the foundation crumbled and the boy was forced to apologize to his tenants and allow [Castle Markbox](http://markbox.io) to fall.
 
-The boy, dejected, tried to image blogging another way, and failed.
+The boy, dejected, tried to imagine blogging another way, and failed.
 
 Then, he thought... "I don't need a **magic castle**, *I just need the magic*."
 
 This is what he did next.
-
-### Installation
-
-	% git clone https://github.com/sivy/boxpub.git
-	% cd boxpub
-	% pip install .
 
 ### Pre-requisites
 
@@ -30,6 +24,19 @@ This is what he did next.
 
 Open up the settings for your Dropbox application and find the "Generated access token" section. Click the button to generate a token and copy it.
 
+### Installation
+
+	% mkdir /opt/
+	% cd /opt/
+	% git clone https://github.com/sivy/boxpub.git
+	% cd boxpub
+	% virtualenv env
+	% source env/bin/activate
+	(env) % pip install -r requirements
+	(env) % pip install .
+
+	% sudo ./gunicorn_start
+
 ### Configuration
 
 Installation will put a basic config file in `/etc/boxpub/config.py`. Edit this file to add your generated token where it says:
@@ -40,11 +47,13 @@ Installation will put a basic config file in `/etc/boxpub/config.py`. Edit this 
 
 Important locations and things:
 
-* `Dropbox/apps/boxpub/posts`: Your blog posts go here, in `YYYY-MM-DD-post-title.md` format.
+* `Dropbox/apps/boxpub/posts`: Your blog posts go here, in `YYYY-MM-DD-post-title.md` format, and require a minimal YAML-format header
 * `Dropbox/apps/boxpub/templates`:
 	- `index.html`
 	- `post.html`
 	- `archive.html`
+
+
 
 ### Thanks
 
