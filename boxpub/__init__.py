@@ -248,4 +248,4 @@ def blog_post_handle(year, month, day, filename, template='post.html'):
 
 
 if __name__ == "__main__":
-    boxpub.run()
+    boxpub.run(host='0.0.0.0')
