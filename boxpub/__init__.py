@@ -42,6 +42,7 @@ CONFIG_FILE = '/etc/boxpub/config.py'
 def load_config(config_file):
     try:
         config = imp.load_source('config', config_file)
+        return config
     except IOError:
         LOG.critical('Could not load config at %s.' % config_file)
         sys.exit(1)
@@ -56,8 +57,8 @@ def render_template(template_string, context):
         'QUERY_STRING': request.query_string,
         'URL': request.url,
         'PATH': request.path,
-        'settings': config,
-        'config': config,
+        'settings': CONFIG,
+        'config': CONFIG,
         'site': {
             'title': 'monkinetic',
             'subhead': 'Steve Ivy\'s weblog, XI Ed.',
@@ -82,7 +83,7 @@ def render_template(template_string, context):
 def render_file_with_template(target_file, target_template):
     """
     """
-    client = dropbox.client.DropboxClient(config.DROPBOX_PRIVATE_TOKEN)
+    client = dropbox.client.DropboxClient(CONFIG.DROPBOX_PRIVATE_TOKEN)
 
     file_response, dropbox_meta = client.get_file_and_metadata(
         target_file)
@@ -168,7 +169,7 @@ def blog_index_handle(template='index.html'):
 
     target_file = "posts"
 
-    client = dropbox.client.DropboxClient(config.DROPBOX_PRIVATE_TOKEN)
+    client = dropbox.client.DropboxClient(CONFIG.DROPBOX_PRIVATE_TOKEN)
 
     dropbox_response = client.metadata(
         target_file, list=True)
