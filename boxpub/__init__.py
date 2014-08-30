@@ -1,5 +1,5 @@
 import logging
-import config
+import imp
 from datetime import datetime
 import jinja2
 import markdown
@@ -25,6 +25,18 @@ log = logging.getLogger('boxpub')
 
 boxpub = Flask('boxpub')
 boxpub.debug = True
+
+
+CONFIG_FILE = '/etc/boxpub/config.py'
+
+def load_config(config_file):
+    try:
+        config = imp.load_source('config', config_file)
+    except IOError:
+        LOG.critical('Could not load config at %s.' % config_file)
+        sys.exit(1)
+
+CONFIG = load_config(CONFIG_FILE)
 
 
 def render_template(template_string, context):
