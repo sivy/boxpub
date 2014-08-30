@@ -14,6 +14,14 @@ Then, he thought... "I don't need a **magic castle**, *I just need the magic*."
 
 This is what he did next.
 
+     _______  _______  __   __  _______  __   __  _______
+    |  _    ||       ||  |_|  ||       ||  | |  ||  _    |
+    | |_|   ||   _   ||       ||    _  ||  | |  || |_|   |
+    |       ||  | |  ||       ||   |_| ||  |_|  ||       |
+    |  _   | |  |_|  | |     | |    ___||       ||  _   |
+    | |_|   ||       ||   _   ||   |    |       || |_|   |
+    |_______||_______||__| |__||___|    |_______||_______|
+
 ### Pre-requisites
 
 1. A Dropbox Account
@@ -26,16 +34,16 @@ Open up the settings for your Dropbox application and find the "Generated access
 
 ### Installation
 
-	% mkdir /opt/
-	% cd /opt/
-	% git clone https://github.com/sivy/boxpub.git
-	% cd boxpub
-	% virtualenv env
-	% source env/bin/activate
-	(env) % pip install -r requirements
-	(env) % pip install .
+    % mkdir /opt/
+    % cd /opt/
+    % git clone https://github.com/sivy/boxpub.git
+    % cd boxpub
+    % virtualenv env
+    % source env/bin/activate
+    (env) % pip install -r requirements
+    (env) % pip install .
 
-	% sudo ./gunicorn_start
+    % sudo ./gunicorn_start
 
 ### Configuration
 
@@ -49,9 +57,9 @@ Important locations and things:
 
 * `Dropbox/apps/boxpub/posts`: Your blog posts go here, in `YYYY-MM-DD-post-title.md` format, and require a minimal YAML-format header
 * `Dropbox/apps/boxpub/templates`:
-	- `index.html`
-	- `post.html`
-	- `archive.html`
+    - `index.html`
+    - `post.html`
+    - `archive.html`
 
 
 
