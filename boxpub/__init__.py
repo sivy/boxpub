@@ -1,10 +1,20 @@
+#  _______  _______  __   __  _______  __   __  _______
+# |  _    ||       ||  |_|  ||       ||  | |  ||  _    |
+# | |_|   ||   _   ||       ||    _  ||  | |  || |_|   |
+# |       ||  | |  ||       ||   |_| ||  |_|  ||       |
+# |  _   | |  |_|  | |     | |    ___||       ||  _   |
+# | |_|   ||       ||   _   ||   |    |       || |_|   |
+# |_______||_______||__| |__||___|    |_______||_______|
+#
+# Copyright (c) 2014 Steve Ivy <steveivy@gmail.com>
+#
+
 import logging
 import imp
 from datetime import datetime
 import jinja2
 import markdown
 import re
-
 import dropbox
 from dropbox import client, session
 # from dropbox.rest import ErrorResponse
