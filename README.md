@@ -28,9 +28,13 @@ This is what he did next.
 4. A web host that can run python apps
 5. Knowledge of the Linux Arcanacus
 
+Open up the settings for your Dropbox application and find the "Generated access token" section. Click the button to generate a token and copy it.
+
 ### Configuration
 
+Installation will put a basic config file in `/etc/boxpub/config.py`. Edit this file to add your generated token where it says:
 
+    DROPBOX_PRIVATE_TOKEN = '<your token here>'
 
 ### Using Boxpub
 
@@ -41,3 +45,8 @@ Important locations and things:
 	- `index.html`
 	- `post.html`
 	- `archive.html`
+
+### Thanks
+
+* Gunicorn and Supervisor setup. <http://prakhar.me/articles/flask-on-nginx-and-gunicorn/>
+* asciiart! <http://patorjk.com/software/taag/>
