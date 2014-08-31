@@ -7,7 +7,7 @@
 # |  _   | |  |_|  | |     | |    ___||       ||  _   |
 # | |_|   ||       ||   _   ||   |    |       || |_|   |
 # |_______||_______||__| |__||___|    |_______||_______|
-#
+
 # Copyright (c) 2014 Steve Ivy <steveivy@gmail.com>
 #
 
@@ -34,7 +34,7 @@ setup (
     include_package_data=True,
     install_requires=REQUIREMENTS,
     data_files=[
-        ('/etc/boxpub/config.py', ['files/config.py']),
-        ('/etc/supervisor/conf.d/boxpub.conf', ['files/supervisord.conf']),
+        ('/etc/boxpub', ['files/config.py']),
+        ('/etc/supervisor/conf.d', ['files/supervisord.conf']),
         ],
     )
