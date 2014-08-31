@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Boxpub : Personal publishing from Dropbox">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Boxpub</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/sivy/boxpub">View on GitHub</a>
+
+          <h1 id="project_title">Boxpub</h1>
+          <h2 id="project_tagline">Personal publishing from Dropbox</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/sivy/boxpub/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/sivy/boxpub/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="the-magical-dropbox-blogging-castle" class="anchor" href="#the-magical-dropbox-blogging-castle"><span class="octicon octicon-link"></span></a>The Magical Dropbox-Blogging Castle</h1>
+
+<p>Once upon a time there were web apps that let you save a  file on your Dropbox, in a special folder, and that file would become a blog post. This was magical.</p>
+
+<p>These web apps were nice, but not updated often, and only worked on a slow polling process because Dropbox (that's all the reason anyone who knew, needed).</p>
+
+<p>One day, a boy came along and said "these are well and nice but the experience could be even better!" Because he was a programmer and was therefore both lazy and full of hubris, he began to stir his magic pot, and then began to build his Castle. The boy built and built, and others saw what he was building and thought it was pretty good. It was easy to use, had bidirectional syncing with the web UI, and was faster to update than the other web apps.</p>
+
+<p>Sadly, because the boy was a programmer, and both lazy and full of hubris, he was actually shite at marketing and maintenance. His magic Dropbox-blogging castle fell into disrepair until one day, the foundation crumbled and the boy was forced to apologize to his tenants and allow <a href="http://markbox.io">Castle Markbox</a> to fall.</p>
+
+<p>The boy, dejected, tried to imagine blogging another way, and failed.</p>
+
+<p>Then, he thought... "I don't need a <strong>magic castle</strong>, <em>I just need the magic</em>."</p>
+
+<p>This is what he did next.</p>
+
+<h3>
+<a name="pre-requisites" class="anchor" href="#pre-requisites"><span class="octicon octicon-link"></span></a>Pre-requisites</h3>
+
+<ol>
+<li>A Dropbox Account</li>
+<li>A Dropbox developer account</li>
+<li>A Dropbox app - it can be in "develop" mode</li>
+<li>A web host that can run python apps</li>
+<li>Knowledge of the Linux Arcanacus</li>
+</ol><p>Open up the settings for your Dropbox application and find the "Generated access token" section. Click the button to generate a token and copy it.</p>
+
+<h3>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<pre><code>% mkdir /opt/
+% cd /opt/
+% git clone https://github.com/sivy/boxpub.git
+% cd boxpub
+% virtualenv env
+% source env/bin/activate
+(env) % pip install -r requirements
+(env) % pip install .
+
+% sudo ./gunicorn_start
+</code></pre>
+
+<h3>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h3>
+
+<p>Installation will put a basic config file in <code>/etc/boxpub/config.py</code>. Edit this file to add your generated token where it says:</p>
+
+<pre><code>DROPBOX_PRIVATE_TOKEN = '&lt;your token here&gt;'
+</code></pre>
+
+<h3>
+<a name="using-boxpub" class="anchor" href="#using-boxpub"><span class="octicon octicon-link"></span></a>Using Boxpub</h3>
+
+<p>Important locations and things:</p>
+
+<ul>
+<li>
+<code>Dropbox/apps/boxpub/posts</code>: Your blog posts go here, in <code>YYYY-MM-DD-post-title.md</code> format, and require a minimal YAML-format header</li>
+<li>
+<code>Dropbox/apps/boxpub/templates</code>:
+
+<ul>
+<li><code>index.html</code></li>
+<li><code>post.html</code></li>
+<li><code>archive.html</code></li>
+</ul>
+</li>
+</ul><h3>
+<a name="thanks" class="anchor" href="#thanks"><span class="octicon octicon-link"></span></a>Thanks</h3>
+
+<ul>
+<li>Gunicorn and Supervisor setup. <a href="http://prakhar.me/articles/flask-on-nginx-and-gunicorn/">http://prakhar.me/articles/flask-on-nginx-and-gunicorn/</a>
+</li>
+<li>asciiart! <a href="http://patorjk.com/software/taag/">http://patorjk.com/software/taag/</a>
+</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Boxpub maintained by <a href="https://github.com/sivy">sivy</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
