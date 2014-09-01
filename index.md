@@ -1,5 +1,6 @@
 ---
-Title: Boxpub
+title: Boxpub
+layout: page
 ---
 # Boxpub
 
