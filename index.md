@@ -1,3 +1,6 @@
+---
+Title: Boxpub
+---
 # Boxpub
 
 Boxpub is a very simple script that makes it moderately easy to run a blog from your Dropbox.
