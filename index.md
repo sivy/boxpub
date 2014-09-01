@@ -1,6 +1,6 @@
 ---
 title: Boxpub
-layout: page
+layout: default
 ---
 # Boxpub
 
