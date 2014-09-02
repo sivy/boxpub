@@ -35,6 +35,6 @@ setup (
     install_requires=REQUIREMENTS,
     data_files=[
         ('/etc/boxpub', ['files/config.py']),
-        ('/etc/supervisor/conf.d', ['files/supervisord.conf']),
+        ('/etc/supervisor/conf.d', ['files/boxpub.conf']),
         ],
     )
