@@ -1,6 +1,6 @@
-name: Solar Theme
-url: http://example.org
-description: A stylish blog using the Solarized color palette
+name: Boxpub
+url: http://sivy.github.io/boxpub
+description: Personal Publishing from Dropbox
 
 permalink: /:year/:month/:day/:title
 paginate: 10
