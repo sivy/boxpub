@@ -15,13 +15,14 @@ from datetime import datetime
 import jinja2
 import markdown
 import re
+import requests
 import dropbox
 from dropbox import client, session
 # from dropbox.rest import ErrorResponse
 
 from werkzeug.routing import BaseConverter
 
-from flask import Flask, request
+from flask import Flask, request, make_response
 
 from postutils import split_markdown, process_markdown
 
@@ -59,13 +60,8 @@ def render_template(template_string, context):
         'PATH': request.path,
         'settings': CONFIG,
         'config': CONFIG,
-        'site': {
-            'title': 'monkinetic',
-            'subhead': 'Steve Ivy\'s weblog, XI Ed.',
-            'description': '',
-            'url': 'http://monkinetic.com',
-            'time': datetime.now(),
-        },
+        'site': CONFIG.SITE_DATA,
+        'time': datetime.now(),
     }
 
     template_globals.update(context)
@@ -160,6 +156,32 @@ def dropbox_webhook_verify():
 @boxpub.route('/webhooks/dropbox', methods=['POST'])
 def dropbox_webhook_handle():
     log.info('Dropbox post request')
+    # get path from meta
+
+    import json
+    deltas = json.loads(request.data)['delta']
+    log.debug(deltas)
+
+    user = deltas['users'][0]
+
+    client = dropbox.client.DropboxClient(CONFIG.DROPBOX_PRIVATE_TOKEN)
+    entries = client.delta()
+
+    log.debug(entries)
+
+    if CONFIG.FASTLY_PURGE:
+        url = 'http://www.monkinetic.com/'
+        #send a PURGE request to the url
+        s = requests.Session()
+        req = requests.Request('PURGE', url)
+        prepped = req.prepare()
+
+        log.info('PURGING %s', url)
+        resp = s.send(prepped)
+
+        log.info('PURGE returned: %s', resp.status_code)
+
+    # requests.
     return ""
 
 
