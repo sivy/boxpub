@@ -45,7 +45,7 @@ logging.basicConfig(
     )
 
 log = logging.getLogger('boxpub')
-format = logging.Formatter(format='%(asctime)s %(module)s.%(funcName)s (%(lineno)d) %(levelname)s: %(message)s'
+format = logging.Formatter('%(asctime)s %(module)s.%(funcName)s (%(lineno)d) %(levelname)s: %(message)s'
 )
 
 fh = logging.FileHandler(CONFIG.LOGFILE)
