@@ -27,17 +27,6 @@ from flask import Flask, request, make_response
 from postutils import split_markdown, process_markdown
 
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s %(module)s.%(funcName)s (%(lineno)d) %(levelname)s: %(message)s'
-    )
-log = logging.getLogger('boxpub')
-
-
-boxpub = Flask('boxpub')
-boxpub.debug = True
-
-
 CONFIG_FILE = '/etc/boxpub/config.py'
 
 def load_config(config_file):
@@ -49,6 +38,24 @@ def load_config(config_file):
         sys.exit(1)
 
 CONFIG = load_config(CONFIG_FILE)
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s %(module)s.%(funcName)s (%(lineno)d) %(levelname)s: %(message)s'
+    )
+
+log = logging.getLogger('boxpub')
+format = logging.Formatter(format='%(asctime)s %(module)s.%(funcName)s (%(lineno)d) %(levelname)s: %(message)s'
+)
+
+fh = logging.FileHandler(CONFIG.LOGFILE)
+fh.setLevel(getattr(logging, CONFIG.LOGLEVEL.upper()))
+
+log.addHandler(fh)
+
+
+boxpub = Flask('boxpub')
+boxpub.debug = True
 
 
 def render_template(template_string, context):
