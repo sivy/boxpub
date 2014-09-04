@@ -164,7 +164,7 @@ def dropbox_webhook_handle():
 
 
 @boxpub.route('/')
-def blog_index_handle(template='index.html'):
+def blog_index_handle(template='index.html', content_type='text/html'):
     log.debug('blog_index_handle()')
 
     target_file = "posts"
@@ -223,7 +223,15 @@ def blog_index_handle(template='index.html'):
             'posts': files,
         })
 
-    return page_content
+    resp = make_response(page_content)
+    resp.headers["Content-Type"] = content_type
+
+    return resp
+
+@boxpub.route('/atom.xml')
+def blog_feed_handle(template='atom.xml'):
+    return blog_index_handle(template, 'application/atom+xml')
+
 
 @boxpub.route('/page/<page>')
 def blog_page_handle(page, template='post.html'):
