@@ -164,11 +164,16 @@ def dropbox_webhook_verify():
 @boxpub.route('/webhooks/dropbox', methods=['POST'])
 def dropbox_webhook_handle():
     log.info('Dropbox post request')
-    # get path from meta
-
-    subprocess.call('curl -X PURGE %s' % config.SITE_URL)
-
-    resp = make_response("OK")
+    url = CONFIG.SITE_DATA['url']
+    try:
+        log.info('PURGING site index')
+        purge_resp = requests.request('PURGE', url)
+        log.debug(purge_resp.text)
+        resp = make_response(purge_resp.text)
+    except Exception, e:
+        log.exception(e)
+        resp = make_response("ERR: " + e.message)
+    log.debug(resp)
     return resp
 
 
