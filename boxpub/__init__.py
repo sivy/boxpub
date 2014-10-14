@@ -168,7 +168,8 @@ def dropbox_webhook_handle():
 
     subprocess.call('curl -X PURGE %s' % config.SITE_URL)
 
-    return ""
+    resp = make_response("OK")
+    return resp
 
 
 @boxpub.route('/')
