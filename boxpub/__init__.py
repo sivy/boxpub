@@ -1,7 +1,7 @@
 #  _______  _______  __   __  _______  __   __  _______
 # |  _    ||       ||  |_|  ||       ||  | |  ||  _    |
 # | |_|   ||   _   ||       ||    _  ||  | |  || |_|   |
-# |       ||  | |  ||       ||   |_| ||  |_|  ||       |
+# |       ||  | |  | |     | |   |_| ||  |_|  ||       |
 # |  _   | |  |_|  | |     | |    ___||       ||  _   |
 # | |_|   ||       ||   _   ||   |    |       || |_|   |
 # |_______||_______||__| |__||___|    |_______||_______|
@@ -17,6 +17,8 @@ import markdown
 import re
 import requests
 import dropbox
+import json
+
 from dropbox import client, session
 # from dropbox.rest import ErrorResponse
 
@@ -45,8 +47,8 @@ logging.basicConfig(
     )
 
 log = logging.getLogger('boxpub')
-format = logging.Formatter('%(asctime)s %(module)s.%(funcName)s (%(lineno)d) %(levelname)s: %(message)s'
-)
+format = logging.Formatter(
+    '%(asctime)s %(module)s.%(funcName)s (%(lineno)d) %(levelname)s: %(message)s')
 
 fh = logging.FileHandler(CONFIG.LOGFILE)
 fh.setLevel(getattr(logging, CONFIG.LOGLEVEL.upper()))
@@ -101,8 +103,6 @@ def render_file_with_template(target_file, target_template):
     if 'meta' in f:
         fmeta = f['meta']
         fmeta.update(dropbox_meta)
-        if 'Title' in fmeta:
-            fmeta['title'] = fmeta['Title']
         f['meta'] = fmeta
     else:
         f['meta'] = dropbox_meta
@@ -110,8 +110,10 @@ def render_file_with_template(target_file, target_template):
     # data['published'] = data['modified']
     # data['created'] = data['modified']
 
-    # fix title
+    # merge 'meta' values with other values
     f.update(f['meta'])
+
+    # fix title
     if 'Title' in f:
         f['title'] = f['Title']
 
@@ -147,7 +149,6 @@ class RegexConverter(BaseConverter):
         super(RegexConverter, self).__init__(url_map)
         self.regex = items[0]
 
-
 boxpub.url_map.converters['regex'] = RegexConverter
 
 
@@ -165,30 +166,8 @@ def dropbox_webhook_handle():
     log.info('Dropbox post request')
     # get path from meta
 
-    import json
-    deltas = json.loads(request.data)['delta']
-    log.debug(deltas)
+    subprocess.call('curl -X PURGE %s' % config.SITE_URL)
 
-    user = deltas['users'][0]
-
-    client = dropbox.client.DropboxClient(CONFIG.DROPBOX_PRIVATE_TOKEN)
-    entries = client.delta()
-
-    log.debug(entries)
-
-    if CONFIG.FASTLY_PURGE:
-        url = 'http://www.monkinetic.com/'
-        #send a PURGE request to the url
-        s = requests.Session()
-        req = requests.Request('PURGE', url)
-        prepped = req.prepare()
-
-        log.info('PURGING %s', url)
-        resp = s.send(prepped)
-
-        log.info('PURGE returned: %s', resp.status_code)
-
-    # requests.
     return ""
 
 
